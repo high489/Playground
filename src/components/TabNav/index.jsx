@@ -1,14 +1,23 @@
 import React from 'react';
-import './index.css'
-import Tab from '@components/Tab'
+import './index.css';
 
 class TabNav extends React.Component {
     render() {
+        let tabs = this.props.tabs.map(tab => {
+            const active = (tab == this.props.selected ? ' current-tab active' : '');
+            return (
+                <div key={tab}>
+                    <a className={"TabLabel" + active} 
+                       onClick={() => this.props.setSelected(tab)}>
+                           {tab}
+                    </a>
+                </div>
+            )
+        })
         return (
             <div className="TabNav">
-                <h2>TabNav</h2>
-                <hr />
-                <Tab></Tab>
+                {tabs}
+                {this.props.children}
             </div>
         )
     }

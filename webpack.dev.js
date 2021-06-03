@@ -12,7 +12,7 @@ const cssLoaders = preprocessor => {
                 reloadAll: true
             },
         },
-        'css-loader',
+        'css-loader'
     ]
 
     if (preprocessor) {
@@ -43,7 +43,6 @@ module.exports = merge(common, {
     mode: 'development',
     output: {
         filename: '[name].js',
-        publicPath: '/',
         path: path.resolve(__dirname, 'dist')
     },
     devServer: {

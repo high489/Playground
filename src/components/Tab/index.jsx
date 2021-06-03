@@ -3,12 +3,14 @@ import './index.css';
 
 class Tab extends React.Component {
     render() {
-        return (
-            <div className="Tab">
-                <h3>Tab1</h3>
-                <hr />
-            </div>
-        )
+        if (this.props.isSelected){
+            return (
+                <div className="Tab">
+                    {this.props.children}
+                </div>
+            );
+        }
+        return null;
     }
 }
 
