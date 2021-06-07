@@ -1,44 +1,38 @@
 import React from 'react';
-import './index.css';
-import TabNav from '@components/TabNav';
-import Tab from '@components/Tab'
+import { Tabs } from "@components/Tabs";
 
-class ToDoApp extends React.Component {
-    constructor(props){
-        super(props)
-
-        this.state = {
-            selected: this.props.tabsData[0].tab_label,
-        }
-    }
-
-    setSelected = (tabLabel) => {
-        this.setState({ selected: tabLabel });
-    }
-
-    render(){
-        let tabLabels = this.props.tabsData.map((tab, i) => {
-            return tab.tab_label
-        })
-        let tabContents = this.props.tabsData.map((tab, i) => {
-            return (
-                <Tab key={tab.tab_id} 
-                     isSelected={this.state.selected == tab.tab_label}>
-                    <p>{tab.tab_content}</p>
-                </Tab>
-            )
-        })
-
-        return (
-            <div className="ToDoApp">
-                <TabNav tabs={tabLabels} 
-                        selected={this.state.selected}
-                        setSelected={this.setSelected}>
-                            {tabContents}
-                </TabNav>
-            </div>
-        );
-    }
-}
-
-export default ToDoApp;
+export function ToDoApp() {
+    const tabs = {
+        login: {
+            title: 'Login',
+            content: <div>Please, Login</div>,
+        },
+        signin: {
+            title: 'Sign In',
+            content: <div>Please, Sign Up</div>,
+        },
+    };
+ 
+    return (
+        <div>
+            <Tabs
+                /* 1 способ убрать div в компоненте
+                render props - функции передаваемые как props, вызываются в render(). 
+                Задают структуру компонента, принимают стили (поэтому сам компонент не хранит стили) */
+                renderLayout={(nav, content) => (
+                    <div>
+                        <div style={{ border: '1px solid red' }}>
+                            {nav}
+                        </div>
+                        <div style={{ border: '1px solid blue' }}>
+                            {content}
+                        </div>
+                    </div>
+                )}
+                /* 2 способ */
+                navItemComponent={(props) => <li {...props} style={{ border: '1px solid black' }} />}
+                tabs={tabs}
+            />
+        </div>
+    );
+};

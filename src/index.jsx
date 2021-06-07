@@ -1,6 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ToDoApp from '@components/ToDoApp';
+import { ToDoApp } from '@components/ToDoApp';
+
+ReactDOM.render(
+    <React.StrictMode>
+        <ToDoApp />
+    </React.StrictMode>,
+    document.getElementById('app')
+)
+
+
+/* // задание до 1го урока
+import ToDoApp from '@components/old_ToDoApp';
 
 ReactDOM.render(
     <ToDoApp tabsData={getData()} />,
@@ -26,4 +37,4 @@ function getData(){
             tab_content:"This is content for Tab 3",
         }
      ];
-}
+} */

@@ -11,70 +11,70 @@ const cssLoaders = preprocessor => {
             loader: MiniCssExtractPlugin.loader,
             options: {
                 hmr: false,
-                reloadAll: true
+                reloadAll: true,
             },
         },
-        'css-loader'
+        'css-loader',
     ]
 
     if (preprocessor) {
-        loaders.push(preprocessor)
-    }
+        loaders.push(preprocessor);
+    };
 
-    return loaders
+    return loaders;
 }
 
 const babelOptions = preset => {
     const options = {
         presets: [
-            '@babel/preset-env'
+            '@babel/preset-env',
         ],
         plugins: [
-            '@babel/plugin-proposal-class-properties'
+            '@babel/plugin-proposal-class-properties',
         ]
-    }
+    },
 
     if (preset) {
-        options.presets.push(preset)
-    }
+        options.presets.push(preset);
+    };
 
-    return options
+    return options;
 }
 
 module.exports = merge(common, {
     mode: 'production',
     output: {
         filename: '[name].[hash].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
     },
     optimization: {
         splitChunks: {
-            chunks: 'all'
+            chunks: 'all',
         },
         minimizer: [
             new OptimizeCssAssetsWebpackPlugin(),
-            new TerserWebpackPlugin()
+            new TerserWebpackPlugin(),
         ]
     },
     devtool: '',
     plugins: [
         new MiniCssExtractPlugin({
-            filename: '[name].[hash].css'
-        })
+            filename: '[name].[hash].css',
+        }),
     ],
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: cssLoaders()
+                use: cssLoaders(),
             },
             {
                 test: /\.less$/,
-                use: cssLoaders('less-loader')
+                use: cssLoaders('less-loader'),
             },
             {
                 test: /\.s[ac]ss$/,
-                use: cssLoaders('sass-loader')
+                use: cssLoaders('sass-loader'),
             },
             {
                 test: /\.js$/,
@@ -82,9 +82,9 @@ module.exports = merge(common, {
                 use: [
                     {
                         loader: 'babel-loader',
-                        options: babelOptions()
+                        options: babelOptions(),
                     }
-                ]
+                ],
             },
             {
                 test: /\.ts$/,
@@ -92,9 +92,9 @@ module.exports = merge(common, {
                 use: [
                     {
                         loader: 'babel-loader',
-                        options: babelOptions('@babel/preset-typescript')
+                        options: babelOptions('@babel/preset-typescript'),
                     }
-                ]
+                ],
             },
             {
                 test: /\.jsx$/,
@@ -102,26 +102,26 @@ module.exports = merge(common, {
                 use: [
                     {
                         loader: 'babel-loader',
-                        options: babelOptions('@babel/preset-react')
+                        options: babelOptions('@babel/preset-react'),
                     }
-                ]
+                ],
             },
             {
                 test: /\.(png|jpg|svg|gif)$/,
-                use: ['file-loader']
+                use: ['file-loader'],
             },
             {
                 test: /\.(ttf|woff|woff2|eot)$/,
-                use: ['file-loader']
+                use: ['file-loader'],
             },
             {
                 test: /\.xml$/,
-                use: ['xml-loader']
+                use: ['xml-loader'],
             },
             {
                 test: /\.csv$/,
-                use: ['csv-loader']
-            }
+                use: ['csv-loader'],
+            },
         ]
     }
-})
+});
