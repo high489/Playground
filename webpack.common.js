@@ -12,7 +12,9 @@ module.exports = {
         extensions: ['.js', '.jsx', '.css'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
+            '@utills': path.resolve(__dirname, 'src/utills'),
             '@components': path.resolve(__dirname, 'src/components'),
+            '@styled': path.resolve(__dirname, 'src/styled'),
             '@wrappers': path.resolve(__dirname, 'src/wrappers'),
             '@ui': path.resolve(__dirname, 'src/ui'),
         },

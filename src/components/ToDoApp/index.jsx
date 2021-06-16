@@ -1,38 +1,33 @@
-import React from 'react';
-import { Tabs } from "@components/Tabs";
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { Modal } from "@components/Modal";
+import { Auth } from "@components/Auth";
+
+const theme = {
+    primaryColor: '#333',
+    bgColor: '#eee',
+}
 
 export function ToDoApp() {
-    const tabs = {
-        login: {
-            title: 'Login',
-            content: <div>Please, Login</div>,
-        },
-        signin: {
-            title: 'Sign In',
-            content: <div>Please, Sign Up</div>,
-        },
-    };
+    // состояние для модального окна
+    const [isModalVisible, setIsModalVisible] = useState(false);
  
+    const handleToggleModel = () => setIsModalVisible(!isModalVisible)
+
     return (
-        <div>
-            <Tabs
-                /* 1 способ убрать div в компоненте
-                render props - функции передаваемые как props, вызываются в render(). 
-                Задают структуру компонента, принимают стили (поэтому сам компонент не хранит стили) */
-                renderLayout={(nav, content) => (
-                    <div>
-                        <div style={{ border: '1px solid red' }}>
-                            {nav}
-                        </div>
-                        <div style={{ border: '1px solid blue' }}>
-                            {content}
-                        </div>
-                    </div>
-                )}
-                /* 2 способ */
-                navItemComponent={(props) => <li {...props} style={{ border: '1px solid black' }} />}
-                tabs={tabs}
-            />
-        </div>
+        <ThemeProvider theme={theme}>
+            <button onClick={handleToggleModel}>
+                Open Modal
+            </button>
+            {
+                isModalVisible && (
+                    <Modal
+                        handleClose={handleToggleModel}
+                    >
+                        <Auth />
+                    </Modal>   
+                )
+            }
+        </ThemeProvider>
     );
 };

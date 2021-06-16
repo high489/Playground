@@ -9,32 +9,4 @@ ReactDOM.render(
     document.getElementById('app')
 )
 
-
-/* // задание до 1го урока
-import ToDoApp from '@components/old_ToDoApp';
-
-ReactDOM.render(
-    <ToDoApp tabsData={getData()} />,
-    document.getElementById('app')
-)
-
-// заглушка вместо апи
-function getData(){
-    return [
-        {
-            tab_id: "0",
-            tab_label: "Tab 1",
-            tab_content: "This is content for Tab 1",
-        },
-        {
-            tab_id: "1",
-            tab_label:"Tab 2",
-            tab_content:"This is content for Tab 2",
-        },
-        {
-            tab_id: "2",
-            tab_label:"Tab 3",
-            tab_content:"This is content for Tab 3",
-        }
-     ];
-} */
+if (module.hot) { module.hot.accept(); }

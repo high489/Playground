@@ -1,43 +1,34 @@
-import React from 'react';
-import { useState } from "react";
+import React, { useState } from 'react';
 
 export function Tabs({tabs, renderLayout, navItemComponent}) {
-    const [activeKey, setActiveKey] = useState();
-
-    /* Массивы и объекты
-    Массив []
-    предназначение:
-        - быстрый перебор элементов массива
-        - можно применять функции JS .map .filter .reduce и тп
-        - можно рендерить в ReactJS
-
-    Объект {}
-    предназначение:
-        - быстрый поиск по ключу
-        - нельзя рендерить в ReactJS
+    /* Функциональные и классовые компоненты
+    Функциональный компонент: 
+        - состояние - string, number, boolean, object;
+        - для каждого изменения требующего рендер - свое состояние;
+        - методы жизненного цикла подключаются отдельно;
+        - функция создается каждый раз заново при новом вызове;
+    Классовый компонент:
+        - состояние - только object;
+        - все изменения требующие рендера - в общем состоянии компонента;
+        - имеет методы жизненного цикла;
+        - класс создается один раз и существует на протяжении всего времени работы приложения;
     */
-
-    // t нужно закешировать
-    const t = {
-        entries: {...tabs}, // t - полуклон объекта tabs (ключи клонируются, остальное - ссылки)
-        keys: Object.keys(tabs), // массив ключей объекта t
-    };
-    //console.log(t);
+    const [activeKey, setActiveKey] = useState(tabs.keys[0]);
 
     return (
         renderLayout(
             /* перебор массива keys, но рендер по объекту t */
-            t.keys.map(key => (
+            tabs.keys.map(key => (
                 <NavItem 
                     onClick={setActiveKey}
                     key={key}
                     id={key}
                     navItemComponent={navItemComponent}
                 >
-                    {t.entries[key].title}
+                    {tabs.entries[key].title}
                 </NavItem>
             )),
-            t.entries[activeKey] && t.entries[activeKey].content,
+            tabs.entries[activeKey] && tabs.entries[activeKey].content,
         )
     )
 };
