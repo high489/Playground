@@ -4,6 +4,13 @@ import { Tabs } from '@components/Tabs'
 import { LogIn } from '@components/Auth/LogIn'
 import { SignUp } from '@components/Auth/SignUp'
 
+import { SWrapRow } from '@styled/flex-wrappers/SWrapRow';
+import { STabsNavCol } from '@styled/Tabs/STabsNavCol';
+import { SWrapCol } from '@styled/flex-wrappers/SWrapCol';
+import { STabsNavRow } from '@styled/Tabs/STabsNavRow';
+import { STabsContentArea } from '@styled/Tabs/STabsContentArea';
+import { STabNavLi } from '@styled/Tabs/STabNavLi';
+
 export function Auth() {
     const tabs = normalizeObject({
         login: {
@@ -22,17 +29,27 @@ export function Auth() {
             render props - функции передаваемые как props, вызываются в render(). 
             Задают структуру компонента, принимают стили (поэтому сам компонент не хранит стили) */
             renderLayout={(nav, content) => (
-            <div>
-                <div style={{ border: '1px solid red' }}>
-                {nav}
-                </div>
-                <div style={{ border: '1px solid blue' }}>
-                {content}
-                </div>
-            </div>
+                // вертикальные табы                 
+                <SWrapCol>
+                  <STabsNavRow>
+                    {nav}
+                  </STabsNavRow>
+                  <STabsContentArea>
+                    {content}
+                  </STabsContentArea>
+                </SWrapCol>
+                /* // горизонтальные табы                 
+                <SWrapRow>
+                  <STabsNavCol>
+                    {nav}
+                  </STabsNavCol>
+                  <STabsContentArea>
+                    {content}
+                  </STabsContentArea>
+                </SWrapRow> */
             )}
             /* 2 способ */
-            navItemComponent={(props) => <li {...props} style={{ border: '1px solid black' }} />}
+            navItemComponent={(props) => <STabNavLi {...props} />}
             tabs={tabs}
         />
     )

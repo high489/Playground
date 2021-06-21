@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { SInput } from '@styled/SInput';
+
+import { SLabel } from '@styled/forms/SLabel';
+import { SInput } from '@styled/forms/SInput';
+import { SSubmitButton } from '@styled/forms/SSubmitButton';
+import { SWrapCol } from '@styled/flex-wrappers/SWrapCol';
 
 export function SignUp() {
     /* Зависимая форма на React
@@ -32,18 +36,25 @@ export function SignUp() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(authData)
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <SInput type={'text'} name={'login'} onChange={handleChangeInput} value={authData.login} />
-            <SInput type={'text'} name={'password'} onChange={handleChangeInput} value={authData.password} />
-            <SInput type={'text'} name={'confirmPassword'} onChange={handleChangeInput} value={authData.confirmPassword} />
-            <SInput type={"submit"} />
+            <SWrapCol>
+                <SLabel htmlFor="uname">Username</SLabel>
+                <SInput id="uname" type={'text'} name={'username'} onChange={handleChangeInput} value={authData.username} />
+                <SLabel htmlFor="pass">Password</SLabel>
+                <SInput id="pass" type={'password'} name={'password'} onChange={handleChangeInput} value={authData.password} />
+                <SLabel htmlFor="cpass">Confirm password</SLabel>
+                <SInput id="cpass" type={'password'} name={'confirmPasword'} onChange={handleChangeInput} value={authData.confirmPasword} />
+                <SSubmitButton type={'submit'}>Sign Up</SSubmitButton>
+            </SWrapCol>
         </form>
     )
 }
 
 SignUp.propTypes = {
+    name: PropTypes.string,
+    password: PropTypes.string,
+    confirmPasword: PropTypes.string,
 }
