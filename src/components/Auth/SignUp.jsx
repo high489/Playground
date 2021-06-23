@@ -1,60 +1,76 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
+import { BaseForm } from '@components/BaseForm';
 import { SLabel } from '@styled/forms/SLabel';
 import { SInput } from '@styled/forms/SInput';
 import { SSubmitButton } from '@styled/forms/SSubmitButton';
 import { SWrapCol } from '@styled/flex-wrappers/SWrapCol';
 
 export function SignUp() {
-    /* Зависимая форма на React
-        - создаем состояние для  полей формы
-            (важно задать изначальные значения состояния, иначе форма не будет зависимой);
-        - в ванильном JS: form.login.value чтобы взять значение инпута из реального DOM дерева
-            React работает с виртуальным DOM
-        - value={authData.} - для инпута задается состоянием (вместо поведение вывода инпута по умолчанию).
-            Это делает форму независимой. 
-            Если у инпута не будет обработчика onChange={handleChangeInput},
-            который меняет состояние после ввода,
-            то в инпуте значение будет изначальное состояние - login: ''
-    */
-
-    const [authData, setAuthData] = useState({
-        login: '',
-        password: '',
-        confirmPassword: '',
-    });
-
-    const handleChangeInput = (e) => {
-        setAuthData({
-            ...authData,
-            // пример: для валидации "только цифры" value не isNaN при преобразовании к числу
-            // пример: введенное value должно быть в UpperCase
-            [e.target.name]: e.target.value.toUpperCase(), 
-        });
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (authData, {setErrors}) => {
+        //e.preventDefault(); // Formik предотвращает стандартное поведение Submit по умолчанию
+        if (authData.password !== authData.confirmPassword) {
+            setErrors({
+                confirmPassword: 'password does not match',
+            });
+        }
+        console.log(authData);
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <SWrapCol>
-                <SLabel htmlFor="uname">Username</SLabel>
-                <SInput id="uname" type={'text'} name={'username'} onChange={handleChangeInput} value={authData.username} />
-                <SLabel htmlFor="pass">Password</SLabel>
-                <SInput id="pass" type={'password'} name={'password'} onChange={handleChangeInput} value={authData.password} />
-                <SLabel htmlFor="cpass">Confirm password</SLabel>
-                <SInput id="cpass" type={'password'} name={'confirmPasword'} onChange={handleChangeInput} value={authData.confirmPasword} />
-                <SSubmitButton type={'submit'}>Sign Up</SSubmitButton>
-            </SWrapCol>
-        </form>
+        <BaseForm 
+            formikData={{
+                onSubmit: handleSubmit,
+                initialValues: {
+                    username: '1',
+                    password: '2',
+                    confirmPassword: 3,
+                },
+            }}
+            renderForm={({
+                values,
+                errors,
+                status,
+                handleChange,
+                afterSubmitPhrease,
+                isSubmitting,
+            }) => (
+                <SWrapCol>
+                    <SLabel htmlFor="uname">Username</SLabel>
+                    <SInput 
+                        id="uname" 
+                        type={'text'} 
+                        name={'username'} 
+                        onChange={handleChange} 
+                        value={values.username} 
+                    />
+                    <SLabel htmlFor="pass">Password</SLabel>
+                    <SInput 
+                        id="pass" 
+                        type={'password'} 
+                        name={'password'} 
+                        onChange={handleChange} 
+                        value={values.password}
+                    />
+                    <SLabel htmlFor="cpass">Confirm password</SLabel>
+                    <SInput 
+                        id="cpass" 
+                        type={'password'} 
+                        name={'confirmPassword'} 
+                        onChange={handleChange} 
+                        value={values.confirmPassword}
+                    />
+                    {errors.confirmPassword}
+                    <SSubmitButton type={'submit'}>{isSubmitting ? 'Sign Up' : afterSubmitPhrease}</SSubmitButton>
+                </SWrapCol>
+            )}
+        />
     )
 }
 
 SignUp.propTypes = {
     name: PropTypes.string,
     password: PropTypes.string,
-    confirmPasword: PropTypes.string,
+    confirmPassword: PropTypes.string,
 }

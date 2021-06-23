@@ -27,9 +27,21 @@ export function LogIn() {
         <form onSubmit={handleSubmit}>
             <SWrapCol>
                 <SLabel htmlFor="uname">Username</SLabel>
-                <SInput id="uname" type={'text'} name={'username'} onChange={handleChangeInput} value={authData.username} />
+                <SInput 
+                    id="uname" 
+                    type={'text'} 
+                    name={'username'} 
+                    onChange={handleChangeInput} 
+                    value={authData.username}
+                />
                 <SLabel htmlFor="pass">Password</SLabel>
-                <SInput id="pass" type={'password'} name={'password'} onChange={handleChangeInput} value={authData.password} />
+                <SInput 
+                    id="pass" 
+                    type={'password'} 
+                    name={'password'} 
+                    onChange={handleChangeInput} 
+                    value={authData.password} 
+                />
                 <SSubmitButton type={'submit'}>Log In</SSubmitButton>
             </SWrapCol>
         </form>

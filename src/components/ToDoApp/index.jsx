@@ -3,10 +3,6 @@ import { ThemeProvider } from 'styled-components';
 import { Modal } from "@components/Modal";
 import { Auth } from "@components/Auth";
 
-import { SModalRoot } from '@styled/Modals/SModalRoot';
-import { SModalWindow } from '@styled/Modals/SModalWindow';
-import { SCloseButton } from '@styled/Modals/SCloseButton';
-
 const theme = {
     primaryColor: '#333',
     bgColor: '#fefefe',
@@ -26,14 +22,6 @@ export function ToDoApp() {
         {
           isModalVisible && (
             <Modal
-              renderLayout={(children, handleClose) => (
-                <SModalRoot>
-                  <SModalWindow>
-                    <SCloseButton onClick={handleClose}>x</SCloseButton>
-                    {children}
-                  </SModalWindow>
-                </SModalRoot>
-              )}
               handleClose={handleToggleModal}
             >
               <Auth />
