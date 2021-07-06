@@ -1,72 +1,99 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as Yup from 'yup';
 
 import { BaseForm } from '@components/BaseForm';
+import { SFormItemCol } from '@styled/forms/SFormItemCol';
 import { SLabel } from '@styled/forms/SLabel';
 import { SInput } from '@styled/forms/SInput';
+import { SPrompt } from '@styled/forms/SPrompt';
 import { SSubmitButton } from '@styled/forms/SSubmitButton';
 import { SWrapCol } from '@styled/flex-wrappers/SWrapCol';
 
+const signUpSchema = Yup.object().shape({
+    username: Yup.string()
+        .min(2, 'Username is too short')
+        .max(50, 'Username is too long')
+        .required('Username is required'),
+    password: Yup.string()
+        .required('Password is required')
+        .matches(
+            /(^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$)/,
+            'Must contain minimum 8 characters, at least one letter and one number:',
+        ),
+    confirmPasword: Yup.string()
+        .required('Password confirmation is required')
+        .oneOf([Yup.ref('password'), null], 'Passwords must match'), 
+});
+
 export function SignUp() {
     const handleSubmit = (authData, {setErrors}) => {
-        //e.preventDefault(); // Formik предотвращает стандартное поведение Submit по умолчанию
-        if (authData.password !== authData.confirmPassword) {
-            setErrors({
-                confirmPassword: 'password does not match',
-            });
-        }
         console.log(authData);
     }
-
     return (
-        <BaseForm 
+        <BaseForm
             formikData={{
                 onSubmit: handleSubmit,
                 initialValues: {
-                    username: '1',
-                    password: '2',
-                    confirmPassword: 3,
+                    username: '',
+                    password: '',
+                    confirmPasword: '',
                 },
+                validationSchema: signUpSchema,
             }}
             renderForm={({
                 values,
                 errors,
-                status,
+                touched,
                 handleChange,
-                afterSubmitPhrease,
+                afterSubmitPhrase,
                 isSubmitting,
             }) => (
                 <SWrapCol>
-                    <SLabel htmlFor="uname">Username</SLabel>
-                    <SInput 
-                        id="uname" 
-                        type={'text'} 
-                        name={'username'} 
-                        onChange={handleChange} 
-                        value={values.username} 
-                    />
-                    <SLabel htmlFor="pass">Password</SLabel>
-                    <SInput 
-                        id="pass" 
-                        type={'password'} 
-                        name={'password'} 
-                        onChange={handleChange} 
-                        value={values.password}
-                    />
+                    <SFormItemCol>
+                        <SLabel htmlFor="uname">Username</SLabel>
+                        <SInput 
+                            id="uname"
+                            type={'text'}
+                            name={'username'}
+                            onChange={handleChange}
+                            value={values.username}
+                        />
+                        {errors.username && touched.username ? (
+                        <SPrompt>{errors.username}</SPrompt>
+                        ) : null}
+                    </SFormItemCol>
+                    <SFormItemCol>
+                        <SLabel htmlFor="pass">Password</SLabel>
+                        <SInput 
+                            id="pass"
+                            type={'password'}
+                            name={'password'}
+                            onChange={handleChange}
+                            value={values.password}
+                        />
+                        {errors.password && touched.password ? (
+                        <SPrompt>{errors.password}</SPrompt>
+                        ) : null}
+                    </SFormItemCol>
+                    <SFormItemCol>
                     <SLabel htmlFor="cpass">Confirm password</SLabel>
-                    <SInput 
-                        id="cpass" 
-                        type={'password'} 
-                        name={'confirmPassword'} 
-                        onChange={handleChange} 
-                        value={values.confirmPassword}
-                    />
-                    {errors.confirmPassword}
-                    <SSubmitButton type={'submit'}>{isSubmitting ? 'Sign Up' : afterSubmitPhrease}</SSubmitButton>
+                        <SInput
+                            id="cpass"
+                            type={'password'}
+                            name={'confirmPasword'}
+                            onChange={handleChange}
+                            value={values.confirmPasword}
+                        />
+                        {errors.confirmPasword && touched.confirmPasword ? (
+                        <SPrompt>{errors.confirmPasword}</SPrompt>
+                        ) : null}
+                    </SFormItemCol>
+                    <SSubmitButton type={'submit'}>{isSubmitting ? 'Sign Up' : afterSubmitPhrase}</SSubmitButton>
                 </SWrapCol>
             )}
         />
-    )
+    );
 }
 
 SignUp.propTypes = {

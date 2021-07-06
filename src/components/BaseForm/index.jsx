@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 
 export function BaseForm({renderForm, formikData}) {
     const handleSubmit = (...args) => {
@@ -8,7 +8,7 @@ export function BaseForm({renderForm, formikData}) {
         return formikData.onSubmit.call(null, ...args);
     }
 
-    const afterSubmitPhrease = 'Loading';
+    const afterSubmitPhrase = 'Loading';
     return (
         <Formik
             // formik сам делает форму зависимой, управляя состоянием этой формы
@@ -59,19 +59,53 @@ export function BaseForm({renderForm, formikData}) {
                     validateOnMount,
                     validationSchema,
                 }) => (
-                    <form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit}>
                         {
                             renderForm({
                                 values,
                                 handleSubmit,
                                 errors,
                                 status,
-                                handleChange,
-                                afterSubmitPhrease,
+                                handleChange, 
                                 isSubmitting,
+                                dirty,
+                                handleBlur,
+                                handleReset,
+                                isValid,
+                                isValidating,
+                                resetForm,
+                                setErrors,
+                                setFieldError,
+                                setFieldTouched,
+                                submitForm,
+                                submitCount,
+                                setStatus,
+                                setSubmitting,
+                                setTouched,
+                                setValues,
+                                touched,
+                                validateForm,
+                                ValidateField,
+                                component,
+                                render,
+                                children,
+                                enableReinitialize,
+                                isInitialValid,
+                                initialErrors,
+                                initialStatus,
+                                initialTouched,
+                                initialValues,
+                                onReset,
+                                onSubmit,
+                                validate,
+                                validateOnBlur,
+                                validateOnChange,
+                                validateOnMount,
+                                validationSchema,
+                                afterSubmitPhrase,
                             })
                         }
-                    </form>
+                    </Form>
                 )
             }
         </Formik>
